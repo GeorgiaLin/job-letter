@@ -12,15 +12,19 @@ import {
   Grid,
   IconButton,
   Box,
-  Select,
   Option,
 } from "@mui/joy";
-import { InputLabel, Avatar, Stack } from "@mui/material";
-// import ThemeProvider from "@mui/styles";
-// import FormControl from "@mui/joy/FormControl";
-import { styled } from "@mui/system";
-// import Select from "@mui/joy/Select";
-// import Option from "@mui/joy/Option";
+import {
+  InputLabel,
+  Avatar,
+  Stack,
+  Select,
+  MenuItem,
+  FormControl,
+  OutlinedInput,
+} from "@mui/material";
+
+// import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Main() {
   const [yourName, setYourName] = useState("");
@@ -36,12 +40,6 @@ function Main() {
   const [outputText, setOutputText] = useState("");
   const [selfIntro, setSelfIntro] = useState("");
   const [moreRequest, setMoreRequest] = useState("");
-
-  const [showProduct, setShowProduct] = useState(false);
-  const [showTeam, setShowTeam] = useState(false);
-  const [showRoleDescription, setShowRoleDescription] = useState(false);
-  const [showRoleRequirement, setShowRoleRequirement] = useState(false);
-  const [showSelfIntro, setshowSelfIntro] = useState(false);
 
   const [generatedMessage, setGeneratedMessage] = useState("");
   const [receivedMessage, setReceivedMessage] = useState("");
@@ -122,10 +120,6 @@ function Main() {
     localStorage.setItem("roleRequirement", value);
   };
 
-  const handleChange = (event) => {
-    setMessageStyle(event.target.value);
-  };
-
   const handleGenerateClick = async () => {
     setIsLoading(true);
     const message = `Write a ${messageStyle} message to the ${recipient} at ${targetCompany} who ${relationship} to ask for ${ask}. Personalize this message to highlight why I am a fit to this role. Finsih the message in ${wordDetails} words. 
@@ -139,6 +133,7 @@ function Main() {
   };
 
   const sendMessageToChatGPT = async (message) => {
+    setReceivedMessage(null);
     const prompt = message;
     const maxTokens = 200; // Adjust this value based on your requirements
 
@@ -321,139 +316,131 @@ function Main() {
                 Message Requirement:
               </Typography>
             </Box>
-
-            <Grid container direction="row" alignItems="center">
-              <Typography textColor={"neutral.500"} paddingRight={1}>
-                {" "}
-                I want{" "}
-              </Typography>
-              <Select
-                color="info"
-                type="select"
-                label="style"
-                placeholder="Choose one…"
-                value={messageStyle}
-                onChange={(event) => setMessageStyle(event.target.value)}
+            {/* <ThemeProvider theme={customTheme}> */}
+            <Grid container alignItems="center" pb={3}>
+              <Typography
+                textColor={"neutral.500"}
+                gutterBottom={true}
+                paddingRight={1}
               >
-                <Option value="linkedin">LinkedIn</Option>
-                <Option value="email">Email</Option>
-              </Select>
-              <Typography textColor={"neutral.500"} padding={1}>
+                Write a
+              </Typography>
+              <Grid item>
+                <FormControl size="small" fullWidth>
+                  <Select
+                    type="selct"
+                    label="style"
+                    value={messageStyle}
+                    onChange={(event) => setMessageStyle(event.target.value)}
+                  >
+                    <MenuItem value="linkedin">LinkedIn</MenuItem>
+                    <MenuItem value="email">Email</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Typography
+                textColor={"neutral.500"}
+                gutterBottom={true}
+                padding={1}
+              >
                 {" "}
-                {messageStyle}{" "}
+                message to a{" "}
+              </Typography>
+              <Grid item>
+                <FormControl
+                  sx={{ m: 1, minWidth: 120 }}
+                  size="small"
+                  color="info"
+                >
+                  <Select
+                    label="who.."
+                    value={recipient}
+                    onChange={(event) => setRecipient(event.target.value)}
+                  >
+                    <MenuItem value="recruiter">recruiter</MenuItem>
+                    <MenuItem value="hiring manager">hiring manager</MenuItem>
+                    <MenuItem value="product manager">product manager</MenuItem>
+                    <MenuItem value="employee">employee</MenuItem>
+                    <MenuItem value="CEO/founder">CEO/founder</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Typography
+                textColor={"neutral.500"}
+                gutterBottom={true}
+                padding={1}
+              >
+                at {targetCompany + " "}
+                who is a
+              </Typography>
+              <Grid item>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <Select
+                    value={relationship}
+                    onChange={(event) => setRelationship(event.target.value)}
+                  >
+                    <MenuItem value="hiring manager">school alumni</MenuItem>
+                    <MenuItem value="product manager">
+                      previous colleagues
+                    </MenuItem>
+                    <MenuItem value="employee">secondary connection</MenuItem>
+                    <MenuItem value="employee">stranger </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Typography
+                textColor={"neutral.500"}
+                gutterBottom={true}
+                padding={1}
+              >
+                to ask for
+              </Typography>
+              <Grid item>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <Select
+                    value={ask}
+                    onChange={(event) => setAsk(event.target.value)}
+                  >
+                    <MenuItem value="a quick chat">a chat</MenuItem>
+                    <MenuItem value="referral">referral</MenuItem>
+                    <MenuItem value="interview prep">interview prep</MenuItem>
+                    <MenuItem value="being referred to the Hiring Manager">
+                      being referred to the Hiring Manager{" "}
+                    </MenuItem>
+                    <MenuItem value="are you hiring">
+                      avalibale positions{" "}
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Typography
+                textColor={"neutral.500"}
+                gutterBottom={true}
+                padding={1}
+              >
+                in{" "}
+              </Typography>
+              <Grid item>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <Select
+                    value={wordDetails}
+                    onChange={(event) => setWordDetails(event.target.value)}
+                  >
+                    <MenuItem value="50 words">50</MenuItem>
+                    <MenuItem value="100 words">100</MenuItem>
+                    <MenuItem value="200 words">150 </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Typography
+                textColor={"neutral.500"}
+                gutterBottom={true}
+                padding={1}
+              >
+                words
               </Typography>
             </Grid>
-            {/* <Box pb={3}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <Typography textColor={"neutral.500"} gutterBottom={true}>
-                  Write a
-                  <Box display="inline-block">
-                    <FormControl
-                      sx={{ m: 1, minWidth: 120 }}
-                      size="small"
-                      fullWidth
-                    >
-                      <Select
-                        type="selct"
-                        label="style"
-                        variant="standard"
-                        value={messageStyle}
-                        onChange={(event) =>
-                          setMessageStyle(event.target.value)
-                        }
-                      >
-                        <MenuItem value="linkedin">LinkedIn</MenuItem>
-                        <MenuItem value="email">Email</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  message to a{" "}
-                  <Box display="inline-block">
-                    <FormControl
-                      sx={{ m: 1, minWidth: 120 }}
-                      size="small"
-                      color="info"
-                    >
-                      <Select
-                        label="who.."
-                        value={recipient}
-                        onChange={(event) => setRecipient(event.target.value)}
-                      >
-                        <MenuItem value="recruiter">recruiter</MenuItem>
-                        <MenuItem value="hiring manager">
-                          hiring manager
-                        </MenuItem>
-                        <MenuItem value="product manager">
-                          product manager
-                        </MenuItem>
-                        <MenuItem value="employee">employee</MenuItem>
-                        <MenuItem value="CEO/founder">CEO/founder</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  at {targetCompany + " "}
-                  who is a
-                  <Box display="inline-block">
-                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                      <Select
-                        value={relationship}
-                        className="select-button"
-                        onChange={(event) =>
-                          setRelationship(event.target.value)
-                        }
-                      >
-                        <MenuItem value="hiring manager">
-                          school alumni
-                        </MenuItem>
-                        <MenuItem value="product manager">
-                          previous colleagues
-                        </MenuItem>
-                        <MenuItem value="employee">
-                          secondary connection
-                        </MenuItem>
-                        <MenuItem value="employee">stranger </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  to ask for
-                  <Box display="inline-block">
-                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                      <Select
-                        className="select-button"
-                        value={ask}
-                        onChange={(event) => setAsk(event.target.value)}
-                      >
-                        <MenuItem value="a quick chat">a chat</MenuItem>
-                        <MenuItem value="referral">referral</MenuItem>
-                        <MenuItem value="interview prep">
-                          interview prep
-                        </MenuItem>
-                        <MenuItem value="being referred to the Hiring Manager">
-                          being referred to the Hiring Manager{" "}
-                        </MenuItem>
-                        <MenuItem value="are you hiring">
-                          avalibale positions{" "}
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  in{" "}
-                  <Box display="inline-block">
-                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                      <Select
-                        value={wordDetails}
-                        onChange={(event) => setWordDetails(event.target.value)}
-                      >
-                        <MenuItem value="50 words">50</MenuItem>
-                        <MenuItem value="100 words">100</MenuItem>
-                        <MenuItem value="200 words">150 </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                  words
-                </Typography>
-              </div>
-            </Box> */}
+            {/* </ThemeProvider> */}
             <Box pb={3}>
               <Typography
                 htmlFor="additionalAsk"
@@ -466,6 +453,7 @@ function Main() {
               <Textarea
                 id="moreRequest"
                 maxRows={2}
+                color="string"
                 value={moreRequest}
                 onChange={(e) => setMoreRequest(e.target.value)}
                 placeholder="Highlight my experience in SQL..."
@@ -499,18 +487,20 @@ function Main() {
               Received Message
             </Typography>
             {isLoading ? (
-              <ClipLoader color="#007bff" />
+              <ClipLoader color="#a374f9" />
             ) : (
               <Typography level="body2" className="output-text">
                 {receivedMessage}
               </Typography>
             )}
-            <Button
-              className="copy-btn"
-              onClick={(event) => copyToClipboard(event)}
-            >
-              Copy
-            </Button>
+            {receivedMessage && receivedMessage.trim().length > 0 && (
+              <Button
+                className="copy-btn"
+                onClick={(event) => copyToClipboard(event)}
+              >
+                Copy
+              </Button>
+            )}
           </div>
           <div id="outputText" className="output">
             {outputText}
