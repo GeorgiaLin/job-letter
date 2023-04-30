@@ -169,7 +169,7 @@ function Main() {
         <div className="fixed-message">
           <Typography>
             <Twemoji text="✨" />
-            This is brought to you by{" "}
+            Developed by{" "}
             <a
               className="link-to-profile"
               variant="outlined"
@@ -207,8 +207,8 @@ function Main() {
             </Box>
             <Box pb={2}>
               <Typography textColor={"neutral.500"} gutterBottom={true}>
-                Write better cold emails in seconds with ChatGPT technology!
-                Tailor based on your own experience and job description
+                Craft job hunt cold emails in seconds - land your dream job with
+                ease! Tailor based on your own experience and job description
               </Typography>
             </Box>
           </Box>
@@ -328,8 +328,6 @@ function Main() {
               <Grid item>
                 <FormControl size="small" fullWidth>
                   <Select
-                    type="selct"
-                    label="style"
                     value={messageStyle}
                     onChange={(event) => setMessageStyle(event.target.value)}
                   >
@@ -353,7 +351,6 @@ function Main() {
                   color="info"
                 >
                   <Select
-                    label="who.."
                     value={recipient}
                     onChange={(event) => setRecipient(event.target.value)}
                   >
