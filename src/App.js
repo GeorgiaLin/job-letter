@@ -8,14 +8,14 @@ const App = () => {
   const [personalInfo, setPersonalInfo] = useState({});
 
   return (
-    // <Router>
-    //   <Routes>
-    //     <Route exact path="/" element={<Main />} />
-    //   </Routes>
-    // </Router>
-    <div>
-      <h1>Hello, World!</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Main />} />
+      </Routes>
+    </Router>
+    // <div>
+    //   <h1>Hello, World!</h1>
+    // </div>
   );
 };
 export default App;
