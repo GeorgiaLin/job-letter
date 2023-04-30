@@ -8,9 +8,10 @@ const App = () => {
   const [personalInfo, setPersonalInfo] = useState({});
 
   return (
-    <Router>
+    <Router basename="/job-letter">
       <Routes>
         <Route exact path="/" element={<Main />} />
+        <Route path="/job-letter" element={<Main />} />
       </Routes>
     </Router>
     // <div>
