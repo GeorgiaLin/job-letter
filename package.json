@@ -62,7 +62,7 @@
   "bugs": {
     "url": "https://github.com/GeorgiaLin/job-letter/issues"
   },
-  "homepage": "https://georgialin.github.io/job-letter",
+  "homepage": "https://georgialin.github.io/job-letter/",
   "devDependencies": {
     "gh-pages": "^5.0.0"
   }
