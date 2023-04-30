@@ -1,0 +1,69 @@
+{
+  "name": "job-letter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "proxy": "http://localhost:3001",
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/joy": "^5.0.0-alpha.74",
+    "@mui/material": "^5.12.1",
+    "@mui/styles": "^5.12.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "cheerio": "^1.0.0-rc.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-emoji-render": "^2.0.1",
+    "react-icons": "^4.8.0",
+    "react-router-dom": "^6.10.0",
+    "react-scripts": "^5.0.1",
+    "styled-components": "^5.3.9",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeorgiaLin/job-letter.git"
+  },
+  "author": "Georgia Lin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GeorgiaLin/job-letter/issues"
+  },
+  "homepage": "https://github.com/GeorgiaLin/job-letter",
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
+  }
+}
