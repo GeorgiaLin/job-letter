@@ -192,9 +192,10 @@ function Main() {
               rel="noopener"
             >
               {" "}
-              Georgia Lin using ChatGPT
+              Georgia Lin
             </a>
             <Twemoji text="👩🏻‍💻" />
+            using ChatGPT
           </Typography>
         </div>
       </Grid>
