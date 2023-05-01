@@ -2,7 +2,14 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.js";
+import ReactGA from "react-ga";
 import reportWebVitals from "./reportWebVitals.js";
+
+// Initialize Google Analytics with your Tracking ID
+ReactGA.initialize("G-649VNLTLLV");
+
+// Track page views
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 const rootElement = document.getElementById("root");
 
