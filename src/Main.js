@@ -137,15 +137,18 @@ function Main() {
     const prompt = message;
     const maxTokens = 200; // Adjust this value based on your requirements
 
-    const response = await fetch("/api/generate-response", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: message,
-      }),
-    });
+    const response = await fetch(
+      " https://job-letter-server.herokuapp.com/api/generate-response",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: message,
+        }),
+      }
+    );
 
     const data = await response.json();
     console.log("API response:", data);
