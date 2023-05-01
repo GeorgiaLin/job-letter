@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Main from "./Main.js";
 import "./App.css";
+import { initGA, trackPageView } from "./analytics.js";
 
 const App = () => {
   const [personalInfo, setPersonalInfo] = useState({});
