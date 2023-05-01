@@ -135,10 +135,10 @@ function Main() {
   };
 
   const sendButtonClickEvent = () => {
-    window.gtag("event", "click", {
-      event_category: "Button",
-      event_label: "Write the Message",
+    window.gtag("event", "button_click", {
+      button_label: "Write the Message",
     });
+    console.log("Button click event sent to Google Analytics");
   };
 
   const sendMessageToChatGPT = async (message) => {
@@ -192,7 +192,7 @@ function Main() {
               rel="noopener"
             >
               {" "}
-              Georgia Lin
+              Georgia Lin using ChatGPT
             </a>
             <Twemoji text="👩🏻‍💻" />
           </Typography>
