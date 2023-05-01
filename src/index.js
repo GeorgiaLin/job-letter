@@ -2,18 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.js";
-import ReactGA from "react-ga4";
 import reportWebVitals from "./reportWebVitals.js";
-
-// src/analytics.js
-
-export const initGA = (trackingID) => {
-  ReactGA.initialize(trackingID);
-};
-
-export const trackPageView = () => {
-  ReactGA.send("pageview");
-};
 
 const rootElement = document.getElementById("root");
 
