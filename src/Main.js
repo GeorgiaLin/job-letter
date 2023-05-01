@@ -130,6 +130,15 @@ function Main() {
     // Send the generated message to ChatGPT
     await sendMessageToChatGPT(message);
     setIsLoading(false);
+
+    sendButtonClickEvent();
+  };
+
+  const sendButtonClickEvent = () => {
+    window.gtag("event", "click", {
+      event_category: "Button",
+      event_label: "Write the Message",
+    });
   };
 
   const sendMessageToChatGPT = async (message) => {
