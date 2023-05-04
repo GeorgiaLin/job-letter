@@ -203,6 +203,7 @@ function Main() {
       <Grid xs={6} md={6} sx={{ backgroundColor: "#f7F7F7" }}>
         <Box
           pb={5}
+          pl={5}
           sx={{
             maxHeight: "100vh",
             overflowY: "auto",
@@ -210,7 +211,23 @@ function Main() {
             paddingBottom: "50px",
           }}
         >
-          <Box pt={5} pl={5}>
+          <Box pt={2} pl={5}>
+            <a
+              href="https://www.producthunt.com/posts/job-letter?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-job&#0045;letter"
+              target="_blank"
+            >
+              <img
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=392646&theme=light"
+                alt="✍️Job&#0032;Letter -
+    &#0032;Craft&#0032;tailored&#0044;&#0032;heartfelt&#0032;cold&#0032;message&#0032;using&#0032;ChatGPT
+    | Product Hunt"
+                style={{ width: "250px", height: "54px" }}
+                width="250"
+                height="54"
+              />
+            </a>
+          </Box>
+          <Box pt={3} pl={5}>
             <Box pb={2}>
               <Typography level="h4">
                 {" "}
