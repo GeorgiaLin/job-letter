@@ -40,6 +40,7 @@ function Main() {
   const [outputText, setOutputText] = useState("");
   const [selfIntro, setSelfIntro] = useState("");
   const [moreRequest, setMoreRequest] = useState("");
+  const [recipientName, setRecipientName] = useState("");
 
   const [generatedMessage, setGeneratedMessage] = useState("");
   const [receivedMessage, setReceivedMessage] = useState("");
@@ -82,12 +83,14 @@ function Main() {
     const storedRoleRequirements = localStorage.getItem("roleRequirement");
     const storedName = localStorage.getItem("yourName");
     const storedIntro = localStorage.getItem("selfIntro");
+    const storedRecipientName = localStorage.getItem("recipientName");
 
     if (storedCompany) setTargetCompany(storedCompany);
     if (storedRole) setTargetRole(storedRole);
     if (storedRoleRequirements) setRoleRequirement(storedRoleRequirements);
     if (storedName) setYourName(storedName);
     if (storedIntro) setSelfIntro(storedIntro);
+    if (storedRecipientName) setRecipientName(storedRecipientName);
   };
 
   const handleNameChange = (e) => {
@@ -120,9 +123,15 @@ function Main() {
     localStorage.setItem("roleRequirement", value);
   };
 
+  const handleRecipientNameChange = (e) => {
+    const value = e.target.value;
+    setRecipientName(value);
+    localStorage.setItem("recipientName", value);
+  };
+
   const handleGenerateClick = async () => {
     setIsLoading(true);
-    const message = `Write a ${messageStyle} message to the ${recipient} at ${targetCompany} who ${relationship} to ask for ${ask}. Personalize this message to highlight why I am a fit to this role. Finsih the message in ${wordDetails} words. 
+    const message = `Write a ${messageStyle} message to ${recipientName}, the ${recipient} at ${targetCompany} who ${relationship} to ask for ${ask}. Personalize this message to highlight why I am a fit to this role. Finish the message in ${wordDetails} words. 
     \n The job descrpiton of ${targetRole}:${roleRequirement}. \n. My name is ${yourName}: ${selfIntro}. ${moreRequest}`;
 
     setGeneratedMessage(message);
@@ -336,7 +345,7 @@ function Main() {
                 placeholder="Type the role requirement here..."
               ></Textarea>
             </Box>
-            <Box pb={3}>
+            <Box pb={2}>
               <Typography
                 htmlFor="targetRole"
                 level="h6"
@@ -345,6 +354,20 @@ function Main() {
                 <Twemoji text="📜" />
                 Message Requirement:
               </Typography>
+            </Box>
+            <Box pb={3}>
+              <Typography htmlFor="recipientName" textColor={"neutral.500"}>
+                Recipient's Name:
+              </Typography>
+              <div className="input-style">
+                <Input
+                  id="recipientName"
+                  color="string"
+                  value={recipientName}
+                  onChange={handleRecipientNameChange}
+                  placeholder="John"
+                />
+              </div>
             </Box>
             {/* <ThemeProvider theme={customTheme}> */}
             <Grid container alignItems="center" pb={3}>
@@ -453,9 +476,9 @@ function Main() {
                     value={wordDetails}
                     onChange={(event) => setWordDetails(event.target.value)}
                   >
-                    <MenuItem value="50 words">50</MenuItem>
-                    <MenuItem value="100 words">100</MenuItem>
-                    <MenuItem value="200 words">150 </MenuItem>
+                    <MenuItem value="50">50</MenuItem>
+                    <MenuItem value="100">100</MenuItem>
+                    <MenuItem value="200">150 </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
