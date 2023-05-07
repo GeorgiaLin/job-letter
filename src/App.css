@@ -239,6 +239,16 @@ button.toggle-btn:hover {
   background-color: #ffffff;
 }
 
+.received-message-xs {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 40px;
+  height: 80%;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: 2px solid #c69eff;
+}
+
 .education-item {
   margin-bottom: 1rem;
 }
@@ -313,6 +323,17 @@ button.copy-btn:hover {
   z-index: 1000;
   text-align: center;
 }
+
+.fixed-bottom-xs {
+  position: fixed;
+  text-align: center;
+  left: 20%;
+  right: 20%;
+  bottom: 10px;
+  padding: 10px;
+  z-index: 1000;
+}
+
 .fixed-message {
   position: fixed;
   top: 0;

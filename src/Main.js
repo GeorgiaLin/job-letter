@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ClipLoader } from "react-spinners";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Twemoji } from "react-emoji-render";
@@ -15,13 +15,11 @@ import {
   Option,
 } from "@mui/joy";
 import {
-  InputLabel,
-  Avatar,
-  Stack,
   Select,
   MenuItem,
   FormControl,
-  OutlinedInput,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 
 // import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -44,6 +42,8 @@ function Main() {
 
   const [generatedMessage, setGeneratedMessage] = useState("");
   const [receivedMessage, setReceivedMessage] = useState("");
+
+  const receivedMessageRef = useRef();
 
   const [education, setEducation] = useState([
     { school: "", degree: "", major: "", courses: "" },
@@ -143,11 +143,19 @@ function Main() {
     sendButtonClickEvent();
   };
 
+  const theme = useTheme();
+  const isXsScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const scrollToReceivedMessage = () => {
+    receivedMessageRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   const sendButtonClickEvent = () => {
     window.gtag("event", "button_click", {
       button_label: "Write the Message",
     });
     console.log("Button click event sent to Google Analytics");
+    console.log(isXsScreen);
   };
 
   const sendMessageToChatGPT = async (message) => {
@@ -204,12 +212,12 @@ function Main() {
               Georgia Lin
             </a>
             <Twemoji text="👩🏻‍💻" />
-            using ChatGPT
+            using ChatGPT {isXsScreen}
           </Typography>
         </div>
       </Grid>
 
-      <Grid xs={6} md={6} sx={{ backgroundColor: "#f7F7F7" }}>
+      <Grid xs={12} md={6} sx={{ backgroundColor: "#f7F7F7" }}>
         <Box
           pb={5}
           pl={5}
@@ -251,7 +259,7 @@ function Main() {
               </Typography>
             </Box>
           </Box>
-          <Box pt={2} pl={5} pb={10}>
+          <Box pt={2} pl={5} pb={3}>
             {/* Name and Education inputs */}
 
             <Box pb={3}>
@@ -491,7 +499,7 @@ function Main() {
               </Typography>
             </Grid>
             {/* </ThemeProvider> */}
-            <Box pb={3}>
+            <Box pb={2}>
               <Typography
                 htmlFor="additionalAsk"
                 level="h6"
@@ -510,62 +518,101 @@ function Main() {
               ></Textarea>
             </Box>
           </Box>
-          <Box pb={10}></Box>
+          {isXsScreen && (
+            <Box pb={5}>
+              {" "}
+              <div className="received-message-xs" ref={receivedMessageRef}>
+                <Typography classname="received-message-title" level="h5">
+                  Received Message
+                </Typography>
+                {isLoading ? (
+                  <ClipLoader color="#a374f9" />
+                ) : (
+                  <Typography level="body2" className="output-text">
+                    {receivedMessage}
+                  </Typography>
+                )}
+                {receivedMessage && receivedMessage.trim().length > 0 && (
+                  <Button
+                    className="copy-btn"
+                    onClick={(event) => copyToClipboard(event)}
+                  >
+                    Copy
+                  </Button>
+                )}
+              </div>
+              <div id="outputText" className="output">
+                {outputText}
+              </div>
+              <div className="fixed-bottom-xs">
+                <Button
+                  variant="solid"
+                  className="generate-button"
+                  onClick={() => {
+                    handleGenerateClick();
+                    scrollToReceivedMessage();
+                  }}
+                >
+                  Write the Meesage
+                </Button>
+              </div>
+            </Box>
+          )}
+          <Box pb={20}></Box>
         </Box>
       </Grid>
-      <Grid xs={6} md={6} style={{ backgroundColor: "#F4EAFF" }}>
-        <Box
-          pt={5}
-          pr={5}
-          sx={{
-            position: "fixed",
-            top: "40px",
-            bottom: "16px",
-            right: "16px",
-            width: "45%",
-            backgroundColor: "background.paper",
-            boxShadow: 1,
-            borderRadius: "4px",
-            padding: "16px",
-            overflowY: "auto",
-          }}
-        >
-          {" "}
-          {/* <p>{generatedMessage}</p> */}
-          <div className="received-message">
-            <Typography classname="received-message-title" level="h5">
-              Received Message
-            </Typography>
-            {isLoading ? (
-              <ClipLoader color="#a374f9" />
-            ) : (
-              <Typography level="body2" className="output-text">
-                {receivedMessage}
+      {!isXsScreen && (
+        <Grid xs={6} md={6} style={{ backgroundColor: "#F4EAFF" }}>
+          <Box
+            sx={{
+              position: "fixed",
+              top: "40px",
+              bottom: "16px",
+              right: "16px",
+              width: "45%",
+              backgroundColor: "background.paper",
+              boxShadow: 1,
+              borderRadius: "4px",
+              padding: "16px",
+              overflowY: "auto",
+            }}
+          >
+            {" "}
+            <div className="received-message">
+              <Typography classname="received-message-title" level="h5">
+                Received Message
               </Typography>
-            )}
-            {receivedMessage && receivedMessage.trim().length > 0 && (
+              {isLoading ? (
+                <ClipLoader color="#a374f9" />
+              ) : (
+                <Typography level="body2" className="output-text">
+                  {receivedMessage}
+                </Typography>
+              )}
+              {receivedMessage && receivedMessage.trim().length > 0 && (
+                <Button
+                  className="copy-btn"
+                  onClick={(event) => copyToClipboard(event)}
+                >
+                  Copy
+                </Button>
+              )}
+            </div>
+            <div id="outputText" className="output">
+              {outputText}
+            </div>
+            <div className="fixed-bottom">
               <Button
-                className="copy-btn"
-                onClick={(event) => copyToClipboard(event)}
+                variant="solid"
+                className="generate-button"
+                onClick={handleGenerateClick}
               >
-                Copy
+                Write the Meesage
               </Button>
-            )}
-          </div>
-          <div id="outputText" className="output">
-            {outputText}
-          </div>
-          <div className="fixed-bottom">
-            <Button
-              variant="solid"
-              className="generate-button"
-              onClick={handleGenerateClick}
-            >
-              Write the Meesage
-            </Button>
-          </div>
-        </Box>
-      </Grid>
+            </div>
+          </Box>
+        </Grid>
+      )}
     </Grid>
   );
 }
