@@ -610,7 +610,7 @@ function Main() {
                 className="generate-button"
                 onClick={handleGenerateClick}
               >
-                Write the Meesage
+                Write the Message
               </Button>
             </div>
           </Box>
