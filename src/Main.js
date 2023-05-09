@@ -21,6 +21,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import mixpanel from "./mixpanel.js";
 
 // import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -75,6 +76,7 @@ function Main() {
 
   useEffect(() => {
     loadStoredValues();
+    mixpanel.track("PageView", { page: "Home" });
   }, []);
 
   const loadStoredValues = () => {
@@ -130,6 +132,7 @@ function Main() {
   };
 
   const handleGenerateClick = async () => {
+    mixpanel.track("Conversion", { type: "Button click" });
     setIsLoading(true);
     const message = `Write a ${messageStyle} message to ${recipientName}, the ${recipient} at ${targetCompany} who ${relationship} to ask for ${ask}. Personalize this message to highlight why I am a fit to this role. Finish the message in ${wordDetails} words. 
     \n The job descrpiton of ${targetRole}:${roleRequirement}. \n. My name is ${yourName}: ${selfIntro}. ${moreRequest}`;
@@ -553,7 +556,7 @@ function Main() {
                     scrollToReceivedMessage();
                   }}
                 >
-                  Write the Meesage
+                  Write the Message
                 </Button>
               </div>
             </Box>
