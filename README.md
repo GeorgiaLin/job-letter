@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# Job Letter Web App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Job Letter](https://georgialin.github.io/job-letter/public/job-letter-logo.png)
 
-## Available Scripts
+Welcome to the Job Letter web app! This powerful tool, developed by Georgia Lin, is designed to assist you in crafting personalized cover letters and cold outreach emails for your job applications.
 
-In the project directory, you can run:
+## Accessing the Web App
 
-### `npm start`
+The Job Letter web app is deployed and accessible at the following URL: [https://georgialin.github.io/job-letter/](https://georgialin.github.io/job-letter/). Simply click on the link to access the application.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## About the Developer
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+My name is Georgia Lin, and I'm the developer behind the Job Letter web app. As a recent graduate and passionate advocate for job seekers, I understand the challenges of crafting tailored application materials. With this app, I aim to simplify and enhance the job application process for individuals like yourself.
 
-### `npm test`
+## How It Works
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Input Your Information**: Start by providing your name, a brief self-introduction, the target role and company you are applying to, and the job description.
 
-### `npm run build`
+2. **Generate Your Documents**: Sit back and let the Job Letter web app work its magic. It utilizes ChatGPT technology to generate personalized cover letters and cold outreach emails based on your input and the job description.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Review and Customize**: The generated documents will be presented to you. Review the content and make any necessary adjustments to ensure they align with your preferences and requirements.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. **Copy and Use**: Once you are satisfied with the generated documents, you can copy them as text and use in your job hunt. You are now equipped with personalized materials to enhance your job application.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Give Feedback
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Your feedback is highly valued! Please feel free to reach out: georgialin1999@gmail.com
