@@ -230,13 +230,13 @@ button.toggle-btn:hover {
   margin-left: 0.5rem;
 }
 
-.received-message {
+/* .received-message {
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 40px;
   border-radius: 5px;
   background-color: #ffffff;
-}
+} */
 
 .received-message-xs {
   margin-top: 20px;

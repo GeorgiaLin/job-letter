@@ -74,6 +74,12 @@ function Main() {
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
     setIsCoverLetter(newValue === 1);
+
+    if (newValue === 0) {
+      mixpanel.track("Tab Click", { tabName: "Cold Message" });
+    } else if (newValue === 1) {
+      mixpanel.track("Tab Click", { tabName: "Cover Letter" });
+    }
   };
 
   const copyToClipboard = (event) => {
@@ -170,10 +176,12 @@ function Main() {
     setIsLoading(true);
 
     if (isCoverLetter) {
+      mixpanel.track("Conversion", { type: "Cover Letter" });
       const message = `Generate a cover letter for the ${targetRole} at ${targetCompany}. The job description is: ${roleRequirement}. My name is ${yourName}: ${selfIntro}. Personalize the cover letter in 150 words to highlight why I am a fit for this role. ${moreRequest}`;
       setGeneratedMessage(message);
       await sendMessageToChatGPT(message);
     } else {
+      mixpanel.track("Conversion", { type: "Cold Message" });
       const message = `Write a ${messageStyle} message to ${recipientName}, the ${recipient} at ${targetCompany} who ${relationship} to ask for ${ask}. Personalize this message to highlight why I am a fit to this role. Finish the message in ${wordDetails} words. 
     \n The job descrpiton of ${targetRole}:${roleRequirement}. \n. My name is ${yourName}: ${selfIntro}. ${moreRequest}`;
       setGeneratedMessage(message);
