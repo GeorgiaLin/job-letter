@@ -13,6 +13,10 @@ import {
   IconButton,
   Box,
   Option,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
 } from "@mui/joy";
 import {
   Select,
@@ -22,6 +26,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import mixpanel from "./mixpanel.js";
+import Lottie from "react-lottie";
+import animationData from "./lotties/loading40.json";
 
 // import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -62,6 +68,14 @@ function Main() {
   const [messageStyle, setMessageStyle] = useState("linkedin");
   const [wordDetails, setWordDetails] = useState("50");
 
+  const [tabValue, setTabValue] = useState(0);
+  const [isCoverLetter, setIsCoverLetter] = useState(false);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+    setIsCoverLetter(newValue === 1);
+  };
+
   const copyToClipboard = (event) => {
     event.preventDefault();
     navigator.clipboard.writeText(receivedMessage).then(
@@ -78,6 +92,15 @@ function Main() {
     loadStoredValues();
     mixpanel.track("PageView", { page: "Home" });
   }, []);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   const loadStoredValues = () => {
     const storedCompany = localStorage.getItem("targetCompany");
@@ -131,21 +154,6 @@ function Main() {
     localStorage.setItem("recipientName", value);
   };
 
-  const handleGenerateClick = async () => {
-    mixpanel.track("Conversion", { type: "Button click" });
-    setIsLoading(true);
-    const message = `Write a ${messageStyle} message to ${recipientName}, the ${recipient} at ${targetCompany} who ${relationship} to ask for ${ask}. Personalize this message to highlight why I am a fit to this role. Finish the message in ${wordDetails} words. 
-    \n The job descrpiton of ${targetRole}:${roleRequirement}. \n. My name is ${yourName}: ${selfIntro}. ${moreRequest}`;
-
-    setGeneratedMessage(message);
-
-    // Send the generated message to ChatGPT
-    await sendMessageToChatGPT(message);
-    setIsLoading(false);
-
-    sendButtonClickEvent();
-  };
-
   const theme = useTheme();
   const isXsScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -153,15 +161,34 @@ function Main() {
     receivedMessageRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleGenerateClick = async () => {
+    mixpanel.track("Conversion", { type: "Button click" });
+    setIsLoading(true);
+
+    if (isCoverLetter) {
+      const message = `Generate a cover letter for the ${targetRole} at ${targetCompany}. The job description is: ${roleRequirement}. My name is ${yourName}: ${selfIntro}. Personalize the cover letter in 150 words to highlight why I am a fit for this role. ${moreRequest}`;
+      setGeneratedMessage(message);
+      await sendMessageToChatGPT(message);
+    } else {
+      const message = `Write a ${messageStyle} message to ${recipientName}, the ${recipient} at ${targetCompany} who ${relationship} to ask for ${ask}. Personalize this message to highlight why I am a fit to this role. Finish the message in ${wordDetails} words. 
+    \n The job descrpiton of ${targetRole}:${roleRequirement}. \n. My name is ${yourName}: ${selfIntro}. ${moreRequest}`;
+      setGeneratedMessage(message);
+      await sendMessageToChatGPT(message);
+    }
+    setIsLoading(false);
+
+    sendButtonClickEvent();
+  };
+
   const sendButtonClickEvent = () => {
     window.gtag("event", "button_click", {
       button_label: "Write the Message",
     });
     console.log("Button click event sent to Google Analytics");
-    console.log(isXsScreen);
   };
 
   const sendMessageToChatGPT = async (message) => {
+    console.log(message);
     setReceivedMessage(null);
     const prompt = message;
     const maxTokens = 200; // Adjust this value based on your requirements
@@ -367,143 +394,172 @@ function Main() {
                 Message Requirement:
               </Typography>
             </Box>
-            <Box pb={3}>
-              <Typography htmlFor="recipientName" textColor={"neutral.500"}>
-                Recipient's Name:
-              </Typography>
-              <div className="input-style">
-                <Input
-                  id="recipientName"
-                  color="string"
-                  value={recipientName}
-                  onChange={handleRecipientNameChange}
-                  placeholder="John"
-                />
-              </div>
-            </Box>
-            {/* <ThemeProvider theme={customTheme}> */}
-            <Grid container alignItems="center" pb={3}>
-              <Typography
-                textColor={"neutral.500"}
-                gutterBottom={true}
-                paddingRight={1}
-              >
-                Write a
-              </Typography>
-              <Grid item>
-                <FormControl size="small" fullWidth>
-                  <Select
-                    value={messageStyle}
-                    onChange={(event) => setMessageStyle(event.target.value)}
+            <Tabs
+              value={tabValue}
+              onChange={handleTabChange}
+              defaultValue={1}
+              size="sm"
+            >
+              <TabList color="info">
+                <Tab value={0}>Cold Meessage</Tab>
+                <Tab value={1}>Cover Letter</Tab>
+              </TabList>
+            </Tabs>
+            {tabValue === 0 && (
+              <Box pt={3}>
+                <Box pb={3}>
+                  <Typography htmlFor="recipientName" textColor={"neutral.500"}>
+                    Recipient's Name:
+                  </Typography>
+                  <div className="input-style">
+                    <Input
+                      id="recipientName"
+                      color="string"
+                      value={recipientName}
+                      onChange={handleRecipientNameChange}
+                      placeholder="John"
+                    />
+                  </div>
+                </Box>
+                {/* <ThemeProvider theme={customTheme}> */}
+                <Grid container alignItems="center" pb={3}>
+                  <Typography
+                    textColor={"neutral.500"}
+                    gutterBottom={true}
+                    paddingRight={1}
                   >
-                    <MenuItem value="linkedin">LinkedIn</MenuItem>
-                    <MenuItem value="email">Email</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Typography
-                textColor={"neutral.500"}
-                gutterBottom={true}
-                padding={1}
-              >
-                {" "}
-                message to a{" "}
-              </Typography>
-              <Grid item>
-                <FormControl
-                  sx={{ m: 1, minWidth: 120 }}
-                  size="small"
-                  color="info"
-                >
-                  <Select
-                    value={recipient}
-                    onChange={(event) => setRecipient(event.target.value)}
+                    Write a
+                  </Typography>
+                  <Grid item>
+                    <FormControl size="small" fullWidth>
+                      <Select
+                        value={messageStyle}
+                        onChange={(event) =>
+                          setMessageStyle(event.target.value)
+                        }
+                      >
+                        <MenuItem value="linkedin">LinkedIn</MenuItem>
+                        <MenuItem value="email">Email</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Typography
+                    textColor={"neutral.500"}
+                    gutterBottom={true}
+                    padding={1}
                   >
-                    <MenuItem value="recruiter">recruiter</MenuItem>
-                    <MenuItem value="hiring manager">hiring manager</MenuItem>
-                    <MenuItem value="product manager">product manager</MenuItem>
-                    <MenuItem value="employee">employee</MenuItem>
-                    <MenuItem value="CEO/founder">CEO/founder</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Typography
-                textColor={"neutral.500"}
-                gutterBottom={true}
-                padding={1}
-              >
-                at {targetCompany + " "}
-                who is a
-              </Typography>
-              <Grid item>
-                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                  <Select
-                    value={relationship}
-                    onChange={(event) => setRelationship(event.target.value)}
+                    {" "}
+                    message to a{" "}
+                  </Typography>
+                  <Grid item>
+                    <FormControl
+                      sx={{ m: 1, minWidth: 120 }}
+                      size="small"
+                      color="info"
+                    >
+                      <Select
+                        value={recipient}
+                        onChange={(event) => setRecipient(event.target.value)}
+                      >
+                        <MenuItem value="recruiter">recruiter</MenuItem>
+                        <MenuItem value="hiring manager">
+                          hiring manager
+                        </MenuItem>
+                        <MenuItem value="product manager">
+                          product manager
+                        </MenuItem>
+                        <MenuItem value="employee">employee</MenuItem>
+                        <MenuItem value="CEO/founder">CEO/founder</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Typography
+                    textColor={"neutral.500"}
+                    gutterBottom={true}
+                    padding={1}
                   >
-                    <MenuItem value="hiring manager">school alumni</MenuItem>
-                    <MenuItem value="product manager">
-                      previous colleagues
-                    </MenuItem>
-                    <MenuItem value="employee">secondary connection</MenuItem>
-                    <MenuItem value="employee">stranger </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Typography
-                textColor={"neutral.500"}
-                gutterBottom={true}
-                padding={1}
-              >
-                to ask for
-              </Typography>
-              <Grid item>
-                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                  <Select
-                    value={ask}
-                    onChange={(event) => setAsk(event.target.value)}
+                    at {targetCompany + " "}
+                    who is a
+                  </Typography>
+                  <Grid item>
+                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                      <Select
+                        value={relationship}
+                        onChange={(event) =>
+                          setRelationship(event.target.value)
+                        }
+                      >
+                        <MenuItem value="hiring manager">
+                          school alumni
+                        </MenuItem>
+                        <MenuItem value="product manager">
+                          previous colleagues
+                        </MenuItem>
+                        <MenuItem value="employee">
+                          secondary connection
+                        </MenuItem>
+                        <MenuItem value="employee">stranger </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Typography
+                    textColor={"neutral.500"}
+                    gutterBottom={true}
+                    padding={1}
                   >
-                    <MenuItem value="a quick chat">a chat</MenuItem>
-                    <MenuItem value="referral">referral</MenuItem>
-                    <MenuItem value="interview prep">interview prep</MenuItem>
-                    <MenuItem value="being referred to the Hiring Manager">
-                      being referred to the Hiring Manager{" "}
-                    </MenuItem>
-                    <MenuItem value="are you hiring">
-                      avalibale positions{" "}
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Typography
-                textColor={"neutral.500"}
-                gutterBottom={true}
-                padding={1}
-              >
-                in{" "}
-              </Typography>
-              <Grid item>
-                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                  <Select
-                    value={wordDetails}
-                    onChange={(event) => setWordDetails(event.target.value)}
+                    to ask for
+                  </Typography>
+                  <Grid item>
+                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                      <Select
+                        value={ask}
+                        onChange={(event) => setAsk(event.target.value)}
+                      >
+                        <MenuItem value="a quick chat">a chat</MenuItem>
+                        <MenuItem value="referral">referral</MenuItem>
+                        <MenuItem value="interview prep">
+                          interview prep
+                        </MenuItem>
+                        <MenuItem value="being referred to the Hiring Manager">
+                          being referred to the Hiring Manager{" "}
+                        </MenuItem>
+                        <MenuItem value="are you hiring">
+                          avalibale positions{" "}
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Typography
+                    textColor={"neutral.500"}
+                    gutterBottom={true}
+                    padding={1}
                   >
-                    <MenuItem value="50">50</MenuItem>
-                    <MenuItem value="100">100</MenuItem>
-                    <MenuItem value="200">150 </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Typography
-                textColor={"neutral.500"}
-                gutterBottom={true}
-                padding={1}
-              >
-                words
-              </Typography>
-            </Grid>
-            {/* </ThemeProvider> */}
-            <Box pb={2}>
+                    in{" "}
+                  </Typography>
+                  <Grid item>
+                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                      <Select
+                        value={wordDetails}
+                        onChange={(event) => setWordDetails(event.target.value)}
+                      >
+                        <MenuItem value="50">50</MenuItem>
+                        <MenuItem value="100">100</MenuItem>
+                        <MenuItem value="200">150 </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Typography
+                    textColor={"neutral.500"}
+                    gutterBottom={true}
+                    padding={1}
+                  >
+                    words
+                  </Typography>
+                </Grid>
+                {/* </ThemeProvider> */}
+              </Box>
+            )}
+            <Box pb={2} pt={3}>
               <Typography
                 htmlFor="additionalAsk"
                 level="h6"
@@ -593,7 +649,18 @@ function Main() {
             }}
           >
             {" "}
-            <div className="received-message">
+            <Box
+              sx={{
+                marginTop: "20px",
+                marginBottom: "20px",
+                padding: "40px",
+                borderRadius: "5px",
+                backgroundColor: "#ffffff",
+                overflowY: "scrollable",
+                minHeight: "80%",
+              }}
+              className="received-message"
+            >
               <Typography classname="received-message-title" level="h5">
                 Received Message
               </Typography>
@@ -612,7 +679,7 @@ function Main() {
                   Copy
                 </Button>
               )}
-            </div>
+            </Box>
             <div id="outputText" className="output">
               {outputText}
             </div>
