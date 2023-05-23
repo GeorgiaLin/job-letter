@@ -148,6 +148,10 @@ function Main() {
     localStorage.setItem("roleRequirement", value);
   };
 
+  const navigateToUrl = () => {
+    window.location.href = "https://zwcn7mmue1v.typeform.com/to/DxJa65qF";
+  };
+
   const handleRecipientNameChange = (e) => {
     const value = e.target.value;
     setRecipientName(value);
@@ -185,6 +189,19 @@ function Main() {
       button_label: "Write the Message",
     });
     console.log("Button click event sent to Google Analytics");
+  };
+
+  const CustomTypography = ({ text }) => {
+    return (
+      <>
+        {text.split("\n").map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
+      </>
+    );
   };
 
   const sendMessageToChatGPT = async (message) => {
@@ -280,13 +297,25 @@ function Main() {
               <Typography level="h4">
                 {" "}
                 <Twemoji text="📄" />
-                Write cold message using ChatGPT
+                Write job messages using ChatGPT
               </Typography>
             </Box>
             <Box pb={2}>
-              <Typography textColor={"neutral.500"} gutterBottom={true}>
-                Craft job hunt cold emails in seconds - land your dream job with
-                ease! Tailor based on your own experience and job description
+              <Box pb={1}>
+                <Typography textColor={"neutral.500"} gutterBottom={true}>
+                  Craft job hunt messages in seconds - land your dream job with
+                  ease! Tailor based on your own experience and job description
+                </Typography>
+              </Box>
+              <Typography textColor={"neutral.500"}>
+                Support:{" "}
+                <Typography variant="soft" color="success" fontWeight="md">
+                  Cold Outreach Message
+                </Typography>
+                {"  "}
+                <Typography variant="soft" color="success" fontWeight="md">
+                  Cover Letter
+                </Typography>
               </Typography>
             </Box>
           </Box>
@@ -304,7 +333,7 @@ function Main() {
                   id="name"
                   value={yourName}
                   onChange={handleNameChange}
-                  placeholder="Enter your name"
+                  placeholder="Georgia Lin"
                 />
               </div>
             </Box>
@@ -320,7 +349,7 @@ function Main() {
                 value={selfIntro}
                 onChange={handleSelfIntroChange}
                 color="string"
-                placeholder="Type your self introduction here..."
+                placeholder="I am a Software Developer with 3 yoe.."
               ></Textarea>
             </Box>
             <div>
@@ -339,7 +368,7 @@ function Main() {
                     id="targetRole"
                     value={targetRole}
                     onChange={handleRoleChange}
-                    placeholder="Enter target role"
+                    placeholder="Engineering Manager"
                   />
                 </div>
               </Box>
@@ -358,7 +387,7 @@ function Main() {
                     color="string"
                     value={targetCompany}
                     onChange={handleCompanyChange}
-                    placeholder="Enter target company"
+                    placeholder="Google"
                   />
                 </div>
               </Box>
@@ -381,7 +410,7 @@ function Main() {
                 color="string"
                 value={roleRequirement}
                 onChange={handleRoleRequirementsChange}
-                placeholder="Type the role requirement here..."
+                placeholder="Copy the role requirement here..."
               ></Textarea>
             </Box>
             <Box pb={2}>
@@ -405,6 +434,13 @@ function Main() {
                 <Tab value={1}>Cover Letter</Tab>
               </TabList>
             </Tabs>
+            {tabValue === 1 && (
+              <Box pt={3}>
+                <Typography textColor={"neutral.500"}>
+                  Write a cover letter for this role in the target company.
+                </Typography>
+              </Box>
+            )}
             {tabValue === 0 && (
               <Box pt={3}>
                 <Box pb={3}>
@@ -578,15 +614,14 @@ function Main() {
               ></Textarea>
             </Box>
             <Box className="feebackbox" pt={5}>
-              <Typography>
-                <Twemoji text="🙋🏻" />
-                <a
-                  className="link-to-stick"
-                  href="https://zwcn7mmue1v.typeform.com/to/DxJa65qF"
-                >
-                  I have feedback!
-                </a>
-              </Typography>
+              <Button
+                size="md"
+                variant="outlined"
+                color="info"
+                onClick={navigateToUrl}
+              >
+                I have feedback!
+              </Button>
             </Box>
           </Box>
           {isXsScreen && (
@@ -600,7 +635,7 @@ function Main() {
                   <ClipLoader color="#a374f9" />
                 ) : (
                   <Typography level="body2" className="output-text">
-                    {receivedMessage}
+                    <CustomTypography text={receivedMessage} />
                   </Typography>
                 )}
                 {receivedMessage && receivedMessage.trim().length > 0 && (
@@ -668,7 +703,7 @@ function Main() {
                 <ClipLoader color="#a374f9" />
               ) : (
                 <Typography level="body2" className="output-text">
-                  {receivedMessage}
+                  <CustomTypography text={receivedMessage} />
                 </Typography>
               )}
               {receivedMessage && receivedMessage.trim().length > 0 && (
