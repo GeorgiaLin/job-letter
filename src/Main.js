@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ClipLoader } from "react-spinners";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Twemoji } from "react-emoji-render";
@@ -191,6 +191,7 @@ function Main() {
       console.log("Unexpected response structure:", data);
     }
   };
+
   return (
     <Grid
       container
@@ -519,6 +520,17 @@ function Main() {
                 onChange={(e) => setMoreRequest(e.target.value)}
                 placeholder="Highlight my experience in SQL..."
               ></Textarea>
+            </Box>
+            <Box className="feebackbox" pt={5}>
+              <Typography>
+                <Twemoji text="🙋🏻" />
+                <a
+                  className="link-to-stick"
+                  href="https://zwcn7mmue1v.typeform.com/to/DxJa65qF"
+                >
+                  I have feedback!
+                </a>
+              </Typography>
             </Box>
           </Box>
           {isXsScreen && (

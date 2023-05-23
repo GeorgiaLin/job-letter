@@ -374,3 +374,17 @@ button.generate-button:hover {
   margin: 20px;
   padding: 20px;
 }
+
+.typeform-container {
+  width: 100%;
+  height: 600px;
+}
+
+.feedbackbox {
+  position: relative;
+  width: 100%;
+}
+
+.link-to-stick {
+  color: #a374f9;
+}
